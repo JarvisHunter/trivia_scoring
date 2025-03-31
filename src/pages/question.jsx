@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { API_BASE } from "../constants/api";
 import { Answer } from "../components/radio_answer";
-// import { Button } from "../components/button";
-// import CheckIcon from "../assets/check.png";
-import Loading from "../components/loading";
+import { fetchData } from "../helper/handleData";
 
 function QuestionPage({
 	teamId,
@@ -14,7 +11,6 @@ function QuestionPage({
 }) {
 	const [selectedAnswer, setSelectedAnswer] = useState("E");
 	const [timeLeft, setTimeLeft] = useState(currentDuration);
-	const [submitted, setSubmitted] = useState(false);
 
 	useEffect(() => {
 		setTimeLeft(currentDuration);
@@ -29,7 +25,7 @@ function QuestionPage({
 	}, [timeLeft]);
 
 	useEffect(() => {
-		if (timeLeft <= 0 && !submitted) {
+		if (timeLeft <= 0) {
 			handleSubmit(null, true);
 		}
 	});
@@ -45,31 +41,15 @@ function QuestionPage({
 			return;
 		}
 
-		try {
-			const response = await fetch(`${API_BASE}/api/answerQuestion`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					teamId,
-					answer: selectedAnswer,
-				}),
-			});
-			const data = await response.json();
-			console.log("Answer submitted:", data);
-			setSubmitted(true);
-		} catch (error) {
-			console.error("Error submitting answer", error);
-		}
-	};
-
-	if (submitted) {
-		return (
-			<>
-				<div className="timer">{timeLeft}</div>
-				<Loading msg="Waiting for the timer to run out..." />
-			</>
+		fetchData(
+			"answerQuestion",
+			"POST",
+			{ teamId, answer: selectedAnswer },
+			data => {
+				console.log("Answer submitted:", data);
+			}
 		);
-	}
+	};
 
 	return (
 		<>
@@ -113,14 +93,6 @@ function QuestionPage({
 						/>
 					</div>
 				</div>
-				{/* <div className="submit-button-container">
-					<Button
-						text="Submit"
-						icon={CheckIcon}
-						inputType="submit"
-						onClick={handleSubmit}
-					/>
-				</div> */}
 			</div>
 		</>
 	);

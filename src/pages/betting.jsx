@@ -2,39 +2,27 @@ import React, { useState } from "react";
 import { InputBox } from "../components/input_box";
 import { Button } from "../components/button";
 import CheckIcon from "../assets/check.png";
-import Loading from "../components/loading";
-import { API_BASE } from "../constants/api";
+import { fetchData } from "../helper/handleData.js";
 
-const BettingPage = ({ currentQuestion, numQuestions, teamInfo }) => {
+const BettingPage = ({
+	currentQuestion,
+	numQuestions,
+	teamInfo,
+	setBetSubmitted,
+}) => {
 	const [bet, setBet] = useState("");
-	const [betSubmitted, setBetSubmitted] = useState(false);
 
 	const handleBet = async e => {
 		e.preventDefault();
 		const betValue = parseInt(bet, 10);
 
-		const response = await fetch(`${API_BASE}/api/bet`, {
-			method: "POST",
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ teamID: teamInfo.teamId, bet: betValue }),
-		});
-
-		if (response.status === 400) {
-			return response.json().then(message => alert(message.error));
-		}
-		setBetSubmitted(true);
-	};
-
-	if (betSubmitted) {
-		return (
-			<div className="submit-button-container">
-				<Loading msg="Waiting for host to start the question..." />
-			</div>
+		fetchData(
+			"bet",
+			"POST",
+			{ teamID: teamInfo.teamId, bet: betValue },
+			_ => setBetSubmitted(true)
 		);
-	}
+	};
 
 	return (
 		<div className="submit-button-container">

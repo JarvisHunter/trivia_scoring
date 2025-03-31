@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./style/scoreboard.css";
 import Loading from "../components/loading";
 import logo from "../assets/stem_club_logo.png";
-import { QUESTION_STATUS } from "../constants/questionConst";
-import { API_BASE } from "../constants/api.js";
+import { GAME_STATUS } from "../constants/questionConst";
 import Table from "../components/table_scoreboard";
 import { socket } from "../socket.js";
+import { fetchData } from "../helper/handleData.js";
 
 function Scoreboard() {
 	const [questionDurations, setQuestionDurations] = useState([]);
@@ -15,22 +15,9 @@ function Scoreboard() {
 	const [timeLeft, setTimeLeft] = React.useState(null);
 
 	useEffect(() => {
-		fetch(`${API_BASE}/api/teams`, {
-			method: "GET",
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-			},
-		})
-			.then(res => {
-				if (res.status === 400) return;
-				return res.json();
-			})
-			.then(data => {
-				if (!data) return;
-				setTeamsInfo(data.teams);
-			})
-			.catch(err => console.error("Error fetching teams data:", err));
+		fetchData("teams", undefined, undefined, data =>
+			setTeamsInfo(data.teams)
+		);
 	}, [gameStatus]);
 
 	useEffect(() => {
@@ -39,26 +26,23 @@ function Scoreboard() {
 			setCurrentQuestion(newData.current_index);
 		}
 
+		socket.connect();
 		socket.on("gameData", onGameDataEvent);
 
 		return () => {
 			socket.off("gameData", onGameDataEvent);
+			socket.disconnect();
 		};
 	}, []);
 
 	useEffect(() => {
-		fetch(`${API_BASE}/api/allQuestionDurations`)
-			.then(res => res.json())
-			.then(data => {
-				setQuestionDurations(data.durations);
-			})
-			.catch(err =>
-				console.error("Error fetching question durations:", err)
-			);
+		fetchData("allQuestionDurations", undefined, undefined, data =>
+			setQuestionDurations(data.durations)
+		);
 	}, []);
 
 	useEffect(() => {
-		if (gameStatus === "started") {
+		if (gameStatus === GAME_STATUS.IN_PROGRESS) {
 			const currentDuration =
 				questionDurations?.find(item => item.index === currentQuestion)
 					?.duration || 30;
@@ -77,7 +61,7 @@ function Scoreboard() {
 	return (
 		<div className="scoreboard-container">
 			<img src={logo} alt="Logo" className="logo" />
-			{gameStatus === QUESTION_STATUS.IN_PROGRESS && (
+			{gameStatus === GAME_STATUS.IN_PROGRESS && (
 				<div className="scoreboard-timer">{timeLeft}</div>
 			)}
 			<div className="scoreboard-title-container">
@@ -85,6 +69,8 @@ function Scoreboard() {
 			</div>
 			{questionDurations === 0 || !gameStatus ? (
 				<Loading msg="Loading scoreboard..." />
+			) : gameStatus === GAME_STATUS.NOT_INITIALIZE ? (
+				<Loading msg="Waiting for host to initialize the game..." />
 			) : (
 				<Table
 					teams={teamsInfo}

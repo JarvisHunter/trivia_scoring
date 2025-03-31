@@ -3,13 +3,17 @@ import { useHistory } from "react-router-dom";
 import "./style/game_over.css";
 import { Button } from "../components/button";
 import LogOutIcon from "../assets/logout.png";
+import { fetchData } from "../helper/handleData.js";
 
 function GameOver() {
 	const history = useHistory();
+	const teamId = localStorage.getItem("team");
 
-	const handleLogOut = async () => {
-		localStorage.removeItem("team");
-		history.push("/");
+	const handleLogOut = () => {
+		fetchData("logout", "PUT", { teamID: teamId }, _ => {
+			localStorage.removeItem("team");
+			history.push("/");
+		});
 	};
 
 	return (
@@ -28,4 +32,3 @@ function GameOver() {
 }
 
 export default GameOver;
-
