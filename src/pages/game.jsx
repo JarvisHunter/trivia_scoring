@@ -98,7 +98,12 @@ function Game() {
 		);
 	}
 
-	if (questionDurations?.length === 0 || !gameStatus || !teamName) {
+	if (
+		questionDurations?.length === 0 ||
+		!gameStatus ||
+		!teamName ||
+		!currentCredit
+	) {
 		return (
 			<div className="team-container">
 				<Loading msg="Loading..." />
