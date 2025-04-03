@@ -5,7 +5,7 @@ import { InputBox } from "../components/input_box";
 import { Button } from "../components/button";
 import ArrowRightIcon from "../assets/arrow-right.png";
 import removeVietnameseTones from "../helper/removeVN";
-import { API_BASE } from "../constants/api";
+import { fetchData } from "../helper/handleData.js";
 
 const LoginPage = () => {
 	const history = useHistory();
@@ -21,21 +21,10 @@ const LoginPage = () => {
 			.toLowerCase()
 			.replaceAll(" ", "_");
 
-		const rawResponse = await fetch(`${API_BASE}/api/login`, {
-			method: "PUT",
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ teamID: uid }),
+		fetchData("login", "PUT", { teamID: uid }, () => {
+			localStorage.setItem("team", uid);
+			history.push("/game");
 		});
-
-		if (rawResponse.status === 400) {
-			rawResponse.json().then(message => alert(message.error));
-			return;
-		}
-		localStorage.setItem("team", uid);
-		history.push("/game");
 	};
 
 	useEffect(() => {

@@ -1,42 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url(https://db.onlinewebfonts.com/c/7732caef9ed946f7916b3f650e8837c2?family=Harding+Text+Web+Regular+Regular);
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+@font-face {
+	font-family: "Arcade";
+	src: url("./assets/fonts/FVF_Fernando_08.ttf") format("truetype");
+}
+
 :root {
-  --white: #FFF9FE;
-  --light-pink: #FDC5F5;
-  --dark-pink: #F7AEF8;
-  --purple: #C989EB;
-  --dark-purple: #8B5FBF;
-  --deep-dark-purple: #392F5A;
-  --black: #0B0912;
+	--white: #fff9fe;
+	--light-pink: #fdc5f5;
+	--dark-pink: #f7aef8;
+	--purple: #c989eb;
+	--dark-purple: #8b5fbf;
+	--deep-dark-purple: #392f5a;
+	--black: #0b0912;
 
-  --green-white: #F3F6F4;
-  --skin: #D6B798;
-  --golden: #C7A87C;
-  --green: #859E74;
-  --dark-green: #70785D;
+	--green-white: #f3f6f4;
+	--skin: #d6b798;
+	--golden: #c7a87c;
+	--green: #859e74;
+	--dark-green: #70785d;
 
-  --red-pink: #E44576;
-  --dark-red-pink: #D23F6C;
-  --orange: #E44658;
+	--red-pink: #e44576;
+	--dark-red-pink: #d23f6c;
+	--orange: #e44658;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html,
 body {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-  height: 100vh;
-  width: 100vw;
-  background-color: var(--white);
-  font-family: 'Roboto', 'Montserrat';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	height: 100vh;
+	width: 100vw;
+	background-color: var(--white);
+	font-family: "Roboto", "Montserrat";
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }

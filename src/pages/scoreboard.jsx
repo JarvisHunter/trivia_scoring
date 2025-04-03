@@ -60,7 +60,7 @@ function Scoreboard() {
 
 	return (
 		<div className="scoreboard-container">
-			<img src={logo} alt="Logo" className="logo" />
+			{/* <img src={logo} alt="Logo" className="logo" /> */}
 			{gameStatus === GAME_STATUS.IN_PROGRESS && (
 				<div className="scoreboard-timer">{timeLeft}</div>
 			)}
@@ -72,10 +72,12 @@ function Scoreboard() {
 			) : gameStatus === GAME_STATUS.NOT_INITIALIZE ? (
 				<Loading msg="Waiting for host to initialize the game..." />
 			) : (
-				<Table
-					teams={teamsInfo}
-					currentQuestion={currentQuestion}
-				></Table>
+				<div className="scoreboard-table-container">
+					<Table
+						teams={teamsInfo}
+						currentQuestion={currentQuestion}
+					></Table>
+				</div>
 			)}
 		</div>
 	);

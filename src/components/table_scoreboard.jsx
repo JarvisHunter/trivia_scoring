@@ -1,28 +1,15 @@
 import RowScoreboard from "./row_scoreboard.jsx";
+import "../pages/style/scoreboard.css";
 
 function Table({ teams, currentQuestion }) {
 	return (
-		<table>
+		<table className="scoreboard-table">
 			<thead>
-				<tr className="column-labels">
-					<td>
-						<div className="label-rank team-info-text-2">Rank</div>
-					</td>
-					<td>
-						<div className="label-name-scoreboard team-info-text-2">
-							Team name
-						</div>
-					</td>
-					<td>
-						<div className="label-correct-answer team-info-text-2">
-							Correct
-						</div>
-					</td>
-					<td>
-						<div className="label-score team-info-text-2">
-							Score
-						</div>
-					</td>
+				<tr className="header-row">
+					<th className="rank-header">RANK</th>
+					<th className="team-header">TEAM NAME</th>
+					<th className="answer-header">CORRECT ANSWER</th>
+					<th className="score-header">SCORE</th>
 				</tr>
 			</thead>
 			<tbody>

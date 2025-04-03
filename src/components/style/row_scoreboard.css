@@ -1,50 +1,16 @@
-.team-info-text-1 {
-    color: black;
-    text-align: center;
-    font-family: "Roboto";
-    font-size: 1.5rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+.team-row {
+	text-transform: uppercase;
+	color: var(--white);
 }
 
-.team-info-text-2 {
-    color: white;
-    text-align: center;
-    font-family: "Roboto";
-    font-size: 1.5rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+.team-row td {
+	padding: 5px 15px;
+	text-align: center;
+	font-size: 15px;
 }
 
-.team-rank  {
-    border-radius: 3.75rem;
-    border: 3px solid black;
-    background: #E8C548;
+.score-cell {
+	color: #ffe700;
+	font-weight: bold;
 }
 
-.team-name-scoreboard  {
-    border-radius: 1.25rem;
-    border: 3px solid black;
-    background: #E8C548;
-}
-
-.team-correct-answer {
-    border-radius: 1.25rem;
-    border: 3px solid black;
-    background: #E8C548;
-}
-
-.team-score  {
-    border-radius: 1.25rem;
-    border: 3px solid black;
-    background: #E8C548;
-}
-
-.team-rank, .team-name-scoreboard, .team-correct-answer, .team-score {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 2rem;
-}

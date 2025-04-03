@@ -20,7 +20,10 @@ const BettingPage = ({
 			"bet",
 			"POST",
 			{ teamID: teamInfo.teamId, bet: betValue },
-			_ => setBetSubmitted(true)
+			_ => {
+				console.log("Bet:", bet);
+				setBetSubmitted(true);
+			}
 		);
 	};
 

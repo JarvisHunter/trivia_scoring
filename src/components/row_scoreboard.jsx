@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 import "./style/row_scoreboard.css";
 
-function RowScoreboard ({index, name, correct, total, score}) {
-    return (
-        <tr>
-            <td><div className="team-rank team-info-text-1">{index}</div></td>
-            <td><div className="team-name-scoreboard team-info-text-1">{name}</div></td>
-            <td><div className="team-correct-answer team-info-text-1">
-                    {correct}/{total}
-                </div></td>
-                <td><div className="team-score team-info-text-1">{score}</div></td>
-        </tr>
-    );
+function RowScoreboard({ index, name, correct, total, score }) {
+	return (
+		<tr key={index} className="team-row">
+			<td className="rank-cell">{index}</td>
+			<td className="team-cell">{name}</td>
+			<td className="answer-cell">
+				{correct || 0}/{total}
+			</td>
+			<td className="score-cell">{score}</td>
+		</tr>
+	);
 }
 
 export default RowScoreboard;

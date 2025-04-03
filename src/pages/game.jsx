@@ -21,11 +21,12 @@ function Game() {
 	const [teamName, setTeamName] = useState();
 	const [currentCredit, setCurrentCredit] = useState(0);
 	const [betSubmitted, setBetSubmitted] = useState(false);
-	const [isGameIDSet, setIsGameIDSet] = useState(false);
+	const [answerSubmitted, setAnswerSubmitted] = useState(false);
+	const [gameID, setGameID] = useState();
 
 	useEffect(() => {
 		function onGameDataEvent(newData) {
-			setIsGameIDSet(newData.gameID !== "");
+			setGameID(newData.gameID);
 			setGameStatus(newData.status);
 			setCurrentQuestion(newData.current_index);
 		}
@@ -46,7 +47,12 @@ function Game() {
 	}, [teamId]);
 
 	useEffect(() => {
-		if (!gameStatus || gameStatus === GAME_STATUS.NOT_INITIALIZE) return;
+		if (
+			!gameStatus ||
+			(gameStatus !== GAME_STATUS.NOT_STARTED &&
+				gameStatus !== GAME_STATUS.SUMMARIZED)
+		)
+			return;
 
 		fetchData("teamCredit", "POST", { teamID: teamId }, data => {
 			setCurrentCredit(data.credit);
@@ -54,16 +60,17 @@ function Game() {
 	}, [gameStatus, teamId]);
 
 	useEffect(() => {
-		if (!isGameIDSet) return;
+		if (!gameID) return;
 
 		fetchData("allQuestionDurations", undefined, undefined, data =>
 			setQuestionDurations(data.durations)
 		);
-	}, [isGameIDSet]);
+	}, [gameID]);
 
 	useEffect(() => {
 		if (gameStatus === GAME_STATUS.SUMMARIZED) {
 			setBetSubmitted(false);
+			setAnswerSubmitted(false);
 		}
 	}, [gameStatus]);
 
@@ -83,7 +90,7 @@ function Game() {
 		});
 	};
 
-	if (!isGameIDSet || gameStatus === GAME_STATUS.NOT_INITIALIZE) {
+	if (!gameID || gameStatus === GAME_STATUS.NOT_INITIALIZE) {
 		return (
 			<div className="team-container">
 				<Loading msg="Waiting for host to initialize the game..." />
@@ -119,7 +126,7 @@ function Game() {
 		);
 	}
 
-	if (gameStatus === GAME_STATUS.FINISHED) {
+	if (answerSubmitted && gameStatus === GAME_STATUS.FINISHED) {
 		return (
 			<div className="team-container">
 				<Loading msg="Waiting for host to tally up the score..." />
@@ -159,7 +166,10 @@ function Game() {
 		);
 	}
 
-	if (gameStatus === GAME_STATUS.IN_PROGRESS) {
+	if (
+		gameStatus === GAME_STATUS.IN_PROGRESS ||
+		(gameStatus === GAME_STATUS.FINISHED && !answerSubmitted)
+	) {
 		return (
 			<div className="team-container">
 				<QuestionPage
@@ -167,6 +177,7 @@ function Game() {
 					currentQuestion={currentQuestion}
 					currentDuration={currentDuration}
 					numQuestions={questionDurations.length}
+					setAnswerSubmitted={setAnswerSubmitted}
 				/>
 			</div>
 		);
