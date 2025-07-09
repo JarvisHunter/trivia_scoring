@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useCallback } from "react";
 import { Answer } from "../components/radio_answer";
 import { fetchData } from "../helper/handleData";
 
@@ -14,38 +13,39 @@ function QuestionPage({
 	const [selectedAnswer, setSelectedAnswer] = useState("E");
 	const [timeLeft, setTimeLeft] = useState(currentDuration);
 
-	useEffect(() => {
-		setTimeLeft(currentDuration);
-	}, [currentDuration]);
-
-	const handleAnswer = useCallback(async () => {
+	const handleAnswer = async answer => {
 		await fetchData(
 			"answerQuestion",
 			"POST",
 			{
 				teamId,
-				answer: selectedAnswer,
+				answer: answer,
 			},
 			_ => {
 				setAnswerSubmitted(true);
-				console.log("Answer submitted:", selectedAnswer);
+				console.log("Answer submitted:", answer);
 			}
 		);
-	}, [teamId, selectedAnswer, setAnswerSubmitted]);
+	};
 
 	useEffect(() => {
-		if (timeLeft <= 0) {
-			handleAnswer();
-			return;
-		}
 		const timerId = setInterval(() => {
-			setTimeLeft(prev => prev - 1);
+			setTimeLeft(time => {
+				if (time === 0) {
+					clearInterval(timerId);
+					handleAnswer(selectedAnswer);
+					return 0;
+				} else return time - 1;
+			});
 		}, 1000);
 		return () => clearInterval(timerId);
-	}, [timeLeft, handleAnswer]);
+		//eslint-disable-next-line
+	}, []);
 
 	const updateAnswer = value => {
+		if (value === selectedAnswer) return;
 		setSelectedAnswer(value);
+		handleAnswer(value);
 	};
 
 	return (

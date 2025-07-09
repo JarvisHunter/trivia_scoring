@@ -1,7 +1,14 @@
-import RowScoreboard from "./row_scoreboard.jsx";
-import "../pages/style/scoreboard.css";
+import "./style/table_scoreboard.css";
+import { useState, useEffect } from "react";
 
 function Table({ teams, currentQuestion }) {
+	const [sortedTeams, setSortedTeams] = useState([...teams]);
+
+	useEffect(() => {
+		const newSortedTeams = [...teams].sort((a, b) => b.credit - a.credit);
+		setSortedTeams(newSortedTeams);
+	}, [teams]);
+
 	return (
 		<table className="scoreboard-table">
 			<thead>
@@ -13,15 +20,17 @@ function Table({ teams, currentQuestion }) {
 				</tr>
 			</thead>
 			<tbody>
-				{teams.map((team, index) => (
-					<RowScoreboard
-						key={index}
-						index={index + 1}
-						name={team.name}
-						correct={team.correctAnswers}
-						total={currentQuestion}
-						score={team.credit}
-					/>
+				{sortedTeams.map((team, index) => (
+					<tr key={index} className="team-row">
+						<td className="rank-cell">{index + 1}</td>
+						<td className="team-cell">{team.name}</td>
+						<td className="answer-cell">
+							{team.correctAnswers || 0}/{currentQuestion}
+						</td>
+						<td className="score-cell animate-score">
+							{team.credit}
+						</td>
+					</tr>
 				))}
 			</tbody>
 		</table>

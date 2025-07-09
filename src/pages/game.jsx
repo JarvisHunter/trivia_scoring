@@ -7,12 +7,12 @@ import { Button } from "../components/button";
 import { useHistory } from "react-router-dom";
 import LogOutIcon from "../assets/logout.png";
 import { socket } from "../socket.js";
-import { GAME_STATUS } from "../constants/questionConst.js";
+import { GAME_STATUS } from "../constants/gameStatus.js";
 import { fetchData } from "../helper/handleData.js";
 
 function Game() {
 	const [gameStatus, setGameStatus] = useState();
-	const [currentQuestion, setCurrentQuestion] = useState(1);
+	const [currentQuestionIndex, setCurrentQuestion] = useState(1);
 	const [currentDuration, setCurrentDuration] = useState();
 	const [questionDurations, setQuestionDurations] = useState([]);
 
@@ -28,7 +28,10 @@ function Game() {
 		function onGameDataEvent(newData) {
 			setGameID(newData.gameID);
 			setGameStatus(newData.status);
-			setCurrentQuestion(newData.current_index);
+			if (newData.current_index !== currentQuestionIndex) {
+				setBetSubmitted(false);
+				setCurrentQuestion(newData.current_index);
+			}
 		}
 
 		socket.connect();
@@ -54,10 +57,12 @@ function Game() {
 		)
 			return;
 
+		if (!gameID) return;
+
 		fetchData("teamCredit", "POST", { teamID: teamId }, data => {
 			setCurrentCredit(data.credit);
 		});
-	}, [gameStatus, teamId]);
+	}, [gameStatus, teamId, gameID]);
 
 	useEffect(() => {
 		if (!gameID) return;
@@ -68,7 +73,10 @@ function Game() {
 	}, [gameID]);
 
 	useEffect(() => {
-		if (gameStatus === GAME_STATUS.SUMMARIZED) {
+		if (
+			gameStatus === GAME_STATUS.NOT_INITIALIZE ||
+			gameStatus === GAME_STATUS.SUMMARIZED
+		) {
 			setBetSubmitted(false);
 			setAnswerSubmitted(false);
 		}
@@ -77,11 +85,11 @@ function Game() {
 	useEffect(() => {
 		if (gameStatus === GAME_STATUS.NOT_STARTED) {
 			const newDuration = questionDurations.find(
-				item => item.index === currentQuestion
+				item => item.index === currentQuestionIndex
 			)?.duration;
 			setCurrentDuration(newDuration);
 		}
-	}, [gameStatus, questionDurations, currentQuestion]);
+	}, [gameStatus, questionDurations, currentQuestionIndex]);
 
 	const handleLogOut = async () => {
 		fetchData("logout", "PUT", { teamID: teamId }, _ => {
@@ -153,7 +161,7 @@ function Game() {
 		return (
 			<div className="team-container">
 				<BettingPage
-					currentQuestion={currentQuestion}
+					currentQuestion={currentQuestionIndex}
 					numQuestions={questionDurations.length}
 					teamInfo={{
 						teamId: teamId,
@@ -174,7 +182,7 @@ function Game() {
 			<div className="team-container">
 				<QuestionPage
 					teamId={teamId}
-					currentQuestion={currentQuestion}
+					currentQuestion={currentQuestionIndex}
 					currentDuration={currentDuration}
 					numQuestions={questionDurations.length}
 					setAnswerSubmitted={setAnswerSubmitted}
@@ -183,7 +191,7 @@ function Game() {
 		);
 	}
 
-	if (currentQuestion === questionDurations.length) {
+	if (currentQuestionIndex === questionDurations.length) {
 		return history.push("/game_over");
 	}
 

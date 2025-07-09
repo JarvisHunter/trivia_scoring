@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./style/scoreboard.css";
 import Loading from "../components/loading";
 import logo from "../assets/stem_club_logo.png";
-import { GAME_STATUS } from "../constants/questionConst";
+import { GAME_STATUS } from "../constants/gameStatus.js";
 import Table from "../components/table_scoreboard";
 import { socket } from "../socket.js";
 import { fetchData } from "../helper/handleData.js";
@@ -13,12 +13,6 @@ function Scoreboard() {
 	const [currentQuestion, setCurrentQuestion] = useState(1);
 	const [teamsInfo, setTeamsInfo] = useState([]);
 	const [timeLeft, setTimeLeft] = React.useState(null);
-
-	useEffect(() => {
-		fetchData("teams", undefined, undefined, data =>
-			setTeamsInfo(data.teams)
-		);
-	}, [gameStatus]);
 
 	useEffect(() => {
 		function onGameDataEvent(newData) {
@@ -36,6 +30,22 @@ function Scoreboard() {
 	}, []);
 
 	useEffect(() => {
+		if (
+			gameStatus !== GAME_STATUS.NOT_STARTED &&
+			gameStatus !== GAME_STATUS.SUMMARIZED
+		)
+			return;
+
+		fetchData(
+			"teams",
+			undefined,
+			undefined,
+			data => setTeamsInfo(data.teams),
+			false
+		);
+	}, [gameStatus]);
+
+	useEffect(() => {
 		fetchData("allQuestionDurations", undefined, undefined, data =>
 			setQuestionDurations(data.durations)
 		);
@@ -51,25 +61,34 @@ function Scoreboard() {
 	}, [gameStatus, currentQuestion, questionDurations]);
 
 	useEffect(() => {
-		if (timeLeft <= 0) return;
+		if (gameStatus !== GAME_STATUS.IN_PROGRESS) return;
+
 		const timerId = setInterval(() => {
-			setTimeLeft(prev => prev - 1);
+			setTimeLeft(time => {
+				if (time === 0) {
+					clearInterval(timerId);
+					return 0;
+				} else return time - 1;
+			});
 		}, 1000);
 		return () => clearInterval(timerId);
-	}, [timeLeft]);
+		//eslint-disable-next-line
+	}, [gameStatus]);
 
 	return (
 		<div className="scoreboard-container">
-			{/* <img src={logo} alt="Logo" className="logo" /> */}
-			{gameStatus === GAME_STATUS.IN_PROGRESS && (
-				<div className="scoreboard-timer">{timeLeft}</div>
-			)}
+			<div className="timer-container">
+				<img src={logo} alt="Logo" className="logo" />
+				{gameStatus === GAME_STATUS.IN_PROGRESS && (
+					<span className="scoreboard-timer">{timeLeft}</span>
+				)}
+			</div>
 			<div className="scoreboard-title-container">
 				<span className="scoreboard-title">SCOREBOARD</span>
 			</div>
 			{questionDurations === 0 || !gameStatus ? (
 				<Loading msg="Loading scoreboard..." />
-			) : gameStatus === GAME_STATUS.NOT_INITIALIZE ? (
+			) : gameStatus === GAME_STATUS.NOT_INITIALIZE || !teamsInfo ? (
 				<Loading msg="Waiting for host to initialize the game..." />
 			) : (
 				<div className="scoreboard-table-container">
