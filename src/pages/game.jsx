@@ -98,6 +98,10 @@ function Game() {
 		});
 	};
 
+	if (!teamId) {
+		history.push("/");
+	}
+
 	if (!gameID || gameStatus === GAME_STATUS.NOT_INITIALIZE) {
 		return (
 			<div className="team-container">
