@@ -9,7 +9,7 @@ import { fetchData } from "../helper/handleData.js";
 
 function Scoreboard() {
 	const [questionDurations, setQuestionDurations] = useState([]);
-	const [gameId, setGameID] = useState();
+	const [gameID, setGameID] = useState();
 	const [gameStatus, setGameStatus] = useState();
 	const [currentQuestion, setCurrentQuestion] = useState(1);
 	const [teamsInfo, setTeamsInfo] = useState([]);
