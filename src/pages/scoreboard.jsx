@@ -9,6 +9,7 @@ import { fetchData } from "../helper/handleData.js";
 
 function Scoreboard() {
 	const [questionDurations, setQuestionDurations] = useState([]);
+	const [gameId, setGameID] = useState();
 	const [gameStatus, setGameStatus] = useState();
 	const [currentQuestion, setCurrentQuestion] = useState(1);
 	const [teamsInfo, setTeamsInfo] = useState([]);
@@ -16,6 +17,7 @@ function Scoreboard() {
 
 	useEffect(() => {
 		function onGameDataEvent(newData) {
+			setGameID(newData.gameID);
 			setGameStatus(newData.status);
 			setCurrentQuestion(newData.current_index);
 		}
@@ -49,7 +51,7 @@ function Scoreboard() {
 		fetchData("allQuestionDurations", undefined, undefined, data =>
 			setQuestionDurations(data.durations)
 		);
-	}, []);
+	}, [gameID]);
 
 	useEffect(() => {
 		if (gameStatus === GAME_STATUS.IN_PROGRESS) {

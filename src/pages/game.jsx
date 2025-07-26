@@ -26,6 +26,7 @@ function Game() {
 
 	useEffect(() => {
 		function onGameDataEvent(newData) {
+			console.log("Received game data:", newData);
 			setGameID(newData.gameID);
 			setGameStatus(newData.status);
 			if (newData.current_index !== currentQuestionIndex) {
