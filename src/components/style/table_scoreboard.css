@@ -1,28 +1,48 @@
 .scoreboard-table {
 	width: 100%;
+	max-height: 100%;
+	border-spacing: 2rem 1rem;
+
 }
 
 .header-row th {
-	padding: 12px 15px;
+	padding: 0.5rem 0.25rem;
 	text-align: center;
-	font-size: 20px;
+	font-size: 1rem;
 	font-weight: bold;
 	text-transform: uppercase;
-	color: #ffe700;
+	background-color: #00196E;
+	color: white;
+	border-radius: 1rem;
 }
 
 .team-row {
-	text-transform: uppercase;
-	color: var(--white);
+	/* text-transform: uppercase; */
+	color: black;
 }
 
 .team-row td {
-	padding: 5px 15px;
+	background-color: #E8C548;
+	padding: 0.5rem 0.25rem;
 	text-align: center;
 	font-size: 15px;
+	font-weight: 700;
+	line-height: normal;
+	border-radius: 1rem;
+}
+
+.rank-cell {
+	width: 10%;
+}
+
+.team-cell {
+	width: 60%;
 }
 
 .score-cell {
-	color: #5ce1e6;
-	font-weight: bold;
+	width: 10%;
+}
+
+.answer-cell {
+	width: 15%;
 }

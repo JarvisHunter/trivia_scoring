@@ -1,82 +1,88 @@
 .scoreboard-container {
-	background: url("../../assets/background_scoreboard.png");
-	background-size: cover;
-
-	min-height: 100vh;
-	width: 100%;
-	overflow: hidden;
-	overflow: -moz-hidden-unscrollable;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	font-family: "Arcade", monospace;
-	color: #ffff00;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    padding: 6vh 3vw;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    background-color: transparent;
+    gap: 0.5rem;
+    background: url("../../assets/background.png") no-repeat center center fixed;
+    overflow: hidden;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+	font-family: "Roboto", system-ui;
 }
 
 .scoreboard-title-container {
-	width: 100%;
-	padding: 30px 0 20px 0;
+	/* width: 100%; */
+	/* padding: 30px 0; */
 	text-align: center;
+	/* background-color: red;	 */
 }
 
 .scoreboard-title {
-	font-family: "Press Start 2P", system-ui;
-	font-weight: 400;
-	font-style: normal;
-	font-size: 50px;
-	letter-spacing: 4px;
-	color: #5ce1e6;
-	text-shadow: 4px 4px 0px #73257b;
-	margin: 20px 0;
-}
+    font-weight: 500;
+    font-style: normal;
+    font-size: 3rem;
+    text-align: center;
+    line-height: normal;
+    color: black;
 
-.timer-container {
-	background: url("../../assets/clock-bg.png");
-	background-size: cover;
-	height: 600px;
-	width: 220px;
-	position: fixed;
-	top: -40px;
-	right: 130px;
-	z-index: 2;
-	display: flex;
-	align-items: flex-end;
-	justify-content: center;
-	transform: rotate(-35deg);
+    /* display: flex;
+    width: 20rem;
+    height: 1rem; 
+    flex-direction: column;
+    justify-content: center; */
 }
 
 .logo {
+	/* background-color: red; */
 	position: fixed;
-	height: 30px;
-	top: 105px;
-	left: 105px;
+	height: 7%;
+	top: 5%;
+	left: 20%;
 }
 
 .scoreboard-timer {
-	padding-bottom: 80px;
-	padding-right: 10px;
-	font-size: 50px;
+	/* padding-bottom: 80px;
+	padding-right: 10px; */
+	position: fixed;
+	right: 0;
+	top: 0;
+	padding: 3rem;
+	z-index: 9999;
+	font-size: 5rem;
 	font-weight: bold;
-	color: #c54d4f;
-	transform: rotate(35deg);
+	color: #00196E;
+	background-color: #CEEDF6;
+	border-radius: 6rem;
+	border: 3px solid #00196E;
 }
 
 .scoreboard-table-container {
-	width: 90%;
-	max-width: 1200px;
-	overflow-x: auto;
+	/* background-color: red; */
+	width: 85%;
+	/* max-height: 5vh; */
+	/* max-width: 1200px; */
+	/* overflow-x: auto; */
 	backdrop-filter: blur(8px);
-	border-radius: 5%;
+	border-radius: 2rem;
+	padding: 1rem;
 }
 
 .loading-container {
-	color: #ffff00;
+	color: black;
 	font-size: 24px;
 	text-align: center;
 	margin-top: 50px;
 }
 
-@keyframes blink {
+/* @keyframes blink {
 	0%,
 	100% {
 		opacity: 1;
@@ -88,4 +94,26 @@
 
 .scoreboard-title {
 	animation: blink 2s infinite;
+} */
+
+/* .scoreboard-table {
+	border-spacing: 0.5rem;
+	max-height: 100%;
 }
+
+th {
+	background-color: #00196E;
+	padding: 1rem 0.5rem;
+	border-radius: 0.5rem;
+	
+	color: white;
+}
+
+td {
+	background-color: #E8C548;
+	border-radius: 0.5rem;
+	margin: 0.5rem 0.5rem;
+	color: black;
+	font-weight: 700;
+	line-height: normal;
+}  */
