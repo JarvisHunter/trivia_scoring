@@ -80,13 +80,10 @@ function Scoreboard() {
 	return (
 		<div className="scoreboard-container">
 			<img src={logo} alt="Logo" className="logo" />
-			{/* <div className="timer-container">
+			<div className="timer-container">
 				{gameStatus === GAME_STATUS.IN_PROGRESS && (
 					<span className="scoreboard-timer">{timeLeft}</span>
 				)}
-			</div> */}
-			<div className="timer-container">
-					<span className="scoreboard-timer">15</span>
 			</div>
 			<div className="scoreboard-title-container">
 				<span className="scoreboard-title">SCOREBOARD</span>
