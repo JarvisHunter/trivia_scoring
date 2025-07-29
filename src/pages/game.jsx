@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import BettingPage from "./betting";
 import QuestionPage from "./question";
 import Loading from "../components/loading";
@@ -13,6 +13,7 @@ import { fetchData } from "../helper/handleData.js";
 function Game() {
 	const [gameStatus, setGameStatus] = useState();
 	const [currentQuestionIndex, setCurrentQuestion] = useState(1);
+	const questionIndexRef = useRef(currentQuestionIndex);
 	const [currentDuration, setCurrentDuration] = useState();
 	const [questionDurations, setQuestionDurations] = useState([]);
 
@@ -24,14 +25,22 @@ function Game() {
 	const [answerSubmitted, setAnswerSubmitted] = useState(false);
 	const [gameID, setGameID] = useState();
 
+	console.log("Current question index:", currentQuestionIndex);
+
+	useEffect(() => {
+		questionIndexRef.current = currentQuestionIndex;
+	}, [currentQuestionIndex]);
+
 	useEffect(() => {
 		function onGameDataEvent(newData) {
 			console.log("Received game data:", newData);
 			setGameID(newData.gameID);
 			setGameStatus(newData.status);
-			if (newData.current_index !== currentQuestionIndex) {
+			if (newData.current_index !== questionIndexRef.current) {
+				console.log("Updating current question index:", questionIndexRef.current, "->", newData.current_index);
 				setBetSubmitted(false);
 				setCurrentQuestion(newData.current_index);
+				questionIndexRef.current = newData.current_index;
 			}
 		}
 
