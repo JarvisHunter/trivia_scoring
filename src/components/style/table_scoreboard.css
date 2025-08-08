@@ -11,23 +11,24 @@
 	font-size: 1rem;
 	font-weight: bold;
 	text-transform: uppercase;
-	background-color: #00196E;
+	background-color: #242B68;
 	color: white;
 	border-radius: 1rem;
+	line-height: 150%;
 }
 
 .team-row {
 	/* text-transform: uppercase; */
-	color: black;
+	color: #242B68;
 }
 
 .team-row td {
-	background-color: #E8C548;
+	background-color: #FBAD22;
 	padding: 0.5rem 0.25rem;
 	text-align: center;
-	font-size: 15px;
-	font-weight: 700;
-	line-height: normal;
+	font-size: 1.2rem;
+	line-height: 150%;
+	font-weight: 600;
 	border-radius: 1rem;
 }
 

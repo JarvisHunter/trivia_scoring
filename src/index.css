@@ -5,8 +5,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 @font-face {
-	font-family: "Arcade";
-	src: url("./assets/fonts/FVF_Fernando_08.ttf") format("truetype");
+	font-family: "Halyard";
+	src: url("./assets/fonts/Halyard_Display_Medium.ttf") format("truetype");
 }
 
 :root {
@@ -43,7 +43,7 @@ body {
 	height: 100vh;
 	width: 100vw;
 	background-color: var(--white);
-	font-family: "Roboto", "Montserrat";
+	font-family: "Halyard", "Montserrat" !important;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
