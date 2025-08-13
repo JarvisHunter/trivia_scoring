@@ -20,7 +20,7 @@ function Game() {
 	const teamId = localStorage.getItem("team");
 	const history = useHistory();
 	const [teamName, setTeamName] = useState();
-	const [currentCredit, setCurrentCredit] = useState(0);
+	const [currentCredit, setCurrentCredit] = useState(null);
 	const [betSubmitted, setBetSubmitted] = useState(false);
 	const [answerSubmitted, setAnswerSubmitted] = useState(false);
 	const [gameID, setGameID] = useState();
@@ -131,7 +131,7 @@ function Game() {
 		questionDurations?.length === 0 ||
 		!gameStatus ||
 		!teamName ||
-		!currentCredit
+		currentCredit == null
 	) {
 		return (
 			<div className="team-container">
