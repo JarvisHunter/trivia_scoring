@@ -1,20 +1,20 @@
 .scoreboard-container {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    padding: 6vh 3vw;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    background-color: transparent;
-    gap: 0.5rem;
-    background: url("../../assets/ow25_background.svg") no-repeat center center fixed;
-    overflow: hidden;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	padding: 6vh 3vw;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background-color: transparent;
+	gap: 0.5rem;
+	background: url("../../assets/tn26_background.png") no-repeat center center fixed;
+	overflow: hidden;
+	-webkit-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-o-background-size: 100% 100%;
+	background-size: 100% 100%;
 	font-family: "Halyard", system-ui;
 }
 
@@ -26,14 +26,14 @@
 }
 
 .scoreboard-title {
-    font-weight: 500;
-    font-style: normal;
-    font-size: 3rem;
-    text-align: center;
-    line-height: normal;
-    color: black;
+	font-weight: 500;
+	font-style: normal;
+	font-size: 3rem;
+	text-align: center;
+	line-height: normal;
+	color: black;
 
-    /* display: flex;
+	/* display: flex;
     width: 20rem;
     height: 1rem; 
     flex-direction: column;
@@ -55,10 +55,10 @@
 	z-index: 9999;
 	font-size: 6rem;
 	font-weight: bold;
-	color: #00196e;
-	background-color: #CEEDF6;
+	color: black;
+	background-color: #F8F8F6;
 	border-radius: 50%;
-	border: 0.25rem solid #00196e;
+	border: 0.25rem solid #BA0F0F;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -71,7 +71,7 @@
 .scoreboard-table-container {
 	width: 85%;
 	border-radius: 2rem;
-	background-color: #E1E1DE;
+	background-color: transparent;
 	padding: 1rem 0.75rem;
 	margin-top: 5rem;
 }
