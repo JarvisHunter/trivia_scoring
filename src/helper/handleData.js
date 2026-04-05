@@ -45,6 +45,9 @@ export async function fetchData(
 			return;
 		} catch (err) {
 			console.error(`Error fetching ${url}:`, err);
+            if (attempts < maxRetries) {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
 		}
 	}
 	console.error(`Max retries reached for ${url}.`);
